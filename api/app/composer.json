@@ -1,0 +1,11 @@
+{
+    "require": {
+        "slim/slim": "^4.0",
+        "illuminate/database": "^6.0",
+    },
+	"autoload": {
+        "psr-4": {
+          "CyberChallenge\\":"./classes/"
+        }
+    }
+}
