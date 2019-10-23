@@ -2,12 +2,8 @@
 namespace CyberChallenge;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Database\Capsule\Manager as DB;
-use \DateTime;
-use \Firebase\JWT\JWT;
 
 class Question extends Eloquent {
-  //use Traits\AdminStuff;
   //table name
   protected $table = 'questions';
   //Use Custom Primary Key
