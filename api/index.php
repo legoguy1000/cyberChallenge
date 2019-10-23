@@ -22,8 +22,14 @@ $app->group('/questions', function () {
   //Get all questions
   $this->get('', function ($request, $response, $args) {
     $count = $request->getParam('count') !== null ? $request->getParam('count'):5;
-    $questions = CyberChallenge\Question::inRandomOrder()->limit($count)->get();
-    $response = $response->withJson($questions);
+    $categories = $request->getParam('categories') !== null ? $request->getParam('categories'):null;
+    $questions = CyberChallenge\Question::inRandomOrder()->limit(5);
+    if(!is_null($categories)) {
+      $cats = is_array($categories) ? $categories : explode(',',$categories);
+      $questions->whereIn('category_id',$cats);
+    }
+    $data = $questions->inRandomOrder()->limit($count)->get();
+    $response = $response->withJson($data);
     return $response;
   });
 });

@@ -47,7 +47,7 @@ class Question extends Eloquent {
   }
 
   public function category() {
-    return $this->belongsTo('CyberChallenge\Category', 'category_id', 'question_id');
+    return $this->belongsTo('CyberChallenge\Category', 'category_id', 'category_id');
   }
 
 }

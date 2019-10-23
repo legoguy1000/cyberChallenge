@@ -1,0 +1,73 @@
+<title class="ng-cloak">Cyber Challenge</title>
+<md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2 md-sidenav-left" flex-xs="100">
+	<md-toolbar  class="md-accent md-whiteframe-z2">
+		<md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn">
+			<img ng-src="" style="max-height: 60px;"/>
+		</md-button>
+	</md-toolbar>
+	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="">
+		<!--<div class="md-tile-content">
+			<i class="material-icons md-36">test</i>
+		</div>-->
+		<div flex="5" hide-gt-sm></div>
+		<div class="md-tile-content">
+			Quiz
+		</div>
+	</md-button>
+	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="">
+		<div flex="5" hide-gt-sm></div>
+		<div class="md-tile-content">
+			Add Questions
+		</div>
+	</md-button>
+</md-sidenav>
+<div layout="column" flex>
+	<md-toolbar layout="row" layout-align="center center">
+		<section layout-align="start center" layout-fill flex class="md-toolbar-tools">
+			<md-button hide-gt-sm ng-click="main.toggleItemsList()" aria-label="Menu">
+				<i class="material-icons">menu</i>
+			</md-button>
+			<div class="" >
+				Cyber Challenge
+			</div>
+		</section>
+	</md-toolbar>
+	<md-content flex layout="roww" class="md-padding page-content">
+		<div ui-view flex></div>
+	</md-content>
+	<md-toolbar layout="row" layout-align="center center" style="min-height: 40px;">
+		<div layout-align="center center" layout-fill flex class="md-toolbar-tools" layout="column" style="font-size: small;">
+			<div>Powered by <a href="https://github.com/legoguy1000/cyberChallenge" target="_blank">Cyber Challenge</a></div>
+			<!--<div ng-show="main.versionInfo.current_version">
+				<span ng-if="main.versionInfo.branch_name=='dev'">Dev:</span>
+				<span>v{{main.versionInfo.current_version}}</span><span ng-if="main.versionInfo.branch_name=='dev'">-<a ng-href="https://github.com/legoguy1000/FRC-Portal/commit/{{main.versionInfo.tag}}" target="_blank">{{ main.versionInfo.tag | limitTo: 7 }}</a></span>
+			</div>-->
+		</div>
+	</md-toolbar>
+</div>
+
+<md-sidenav md-component-id="right" class="md-whiteframe-z2 md-sidenav-right">
+    <md-toolbar>
+        <md-toolbar class="" layout="row" layout-align="center center">
+            <img class="img-circle" ng-src="{{main.userInfo.profile_image || 'images/blank_user.png'}}">
+            <md-menu md-offset="0 20">
+                <md-button class="capitalize" ng-click="$mdMenu.open()" aria-label="Open menu">
+                    <span>{{main.userInfo.full_name}}</span>
+                    <i class="material-icons">keyboard_arrow_down</i>
+                </md-button>
+                <md-menu-content width="3">
+                    <md-menu-item><md-button ng-click="main.toggleRightSidebar()" ui-sref="main.profile">Profile</md-button></md-menu-item>
+                    <md-menu-item><md-button ng-click="main.toggleRightSidebar(); main.logout()">Log out</md-button></md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </md-toolbar>
+    </md-toolbar>
+    <section>
+        <md-toolbar  class="md-hue-1">
+            <div class="md-toolbar-tools">
+                <h3>Messages</h3>
+            </div>
+        </md-toolbar>
+        <!-- <div ng-include src="'views/partials/messages.html'"/> -->
+    </section>
+</md-sidenav>

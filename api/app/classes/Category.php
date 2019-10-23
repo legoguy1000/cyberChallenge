@@ -3,7 +3,7 @@ namespace CyberChallenge;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class UserCategory extends Eloquent {
+class Category extends Eloquent {
   //table name
   protected $table = 'question_categories';
   //Use Custom Primary Key
@@ -15,7 +15,6 @@ class UserCategory extends Eloquent {
  */
   protected $keyType = 'string';
   public $incrementing = false;
-  public $timestamps = false;
   /**
   * The attributes that are mass assignable.
   *
@@ -53,6 +52,6 @@ class UserCategory extends Eloquent {
   }
 
   public function questions() {
-    return $this->hasMany('CyberChallenge\Question', 'question_id', 'category_id');
+    return $this->hasMany('CyberChallenge\Question', 'category_id', 'category_id');
   }
 }
