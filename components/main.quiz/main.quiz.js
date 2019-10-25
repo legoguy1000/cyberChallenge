@@ -14,6 +14,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.interval = null;
 	vm.answers = [];
 	vm.answerOptions = ['a','b','c','d'];
+	vm.answerCounts = {true: 0, false: 0};
 	vm.quizParams = {
 		'categories': null,
 		'count': 5,
@@ -74,6 +75,10 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 			interval();
 		} else {
 			vm.quizOver = true;
+			for (var i = 0; i < vm.answers.length; i++) {
+			  var answer = vm.answers[i];
+			  vm.answerCounts[answer] = vm.answerCounts[answer] + 1;
+			}
 		}
 	}
 
@@ -95,6 +100,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		vm.timer = 0;
 		vm.interval = null;
 		vm.answers = [];
+		vm.answerCounts = {true: 0, false: 0};
 	}
 
 }

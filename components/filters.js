@@ -12,7 +12,11 @@ angular.module('CyberChallenge')
 			});
 		}
 	}
-})
+}).filter('percentage', ['$filter', function ($filter) {
+  return function (input, decimals) {
+    return $filter('number')(input * 100, decimals) + '%';
+  };
+}])
 .filter('sprintf', function() {
 	function parse(str, args) {
 		var i = 0;
@@ -104,11 +108,6 @@ angular.module('CyberChallenge')
 .filter('secondsToDateTime', [function() {
     return function(seconds) {
         return new Date(1970, 0, 1).setSeconds(seconds);
-    };
-}])
-.filter('teamKeyToNum', [function() {
-    return function(key) {
-        return key.substring(3);
     };
 }])
 .filter("emptyToEnd", function () {

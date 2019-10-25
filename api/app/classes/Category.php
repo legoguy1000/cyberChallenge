@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Category extends Eloquent {
   //table name
-  protected $table = 'question_categories';
+  protected $table = 'categories';
   //Use Custom Primary Key
   protected $primaryKey = 'category_id'; // or null
   /**

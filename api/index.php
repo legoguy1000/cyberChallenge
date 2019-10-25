@@ -21,21 +21,22 @@ $app = new \Slim\App(['settings' => $config]);
 $app->group('/questions', function () {
   //Get all questions
   $this->get('', function ($request, $response, $args) {
-    $count = $request->getParam('count') !== null ? $request->getParam('count'):0;
+    $questions = CyberChallenge\Question::with(['category', 'answers'])->get();
+    $response = $response->withJson($questions);
+    return $response;
+  });
+  //Get questions for quiz
+  $this->get('/quiz', function ($request, $response, $args) {
+    $count = $request->getParam('count') !== null &&  $request->getParam('count') > 0 ? $request->getParam('count'):5;
     $categories = $request->getParam('categories') !== null && $request->getParam('categories') !== '' ? $request->getParam('categories'):null;
-    $random = $request->getParam('random') !== null ? true:false;
-    $questions = CyberChallenge\Question::with('category');
-    if($random) {
-      $questions = $questions->inRandomOrder();
-    }
+    $questions = CyberChallenge\Question::with(['category', 'answers' => function ($q) {
+      $q->inRandomOrder();
+    }])->inRandomOrder()->limit($count);
     if(!is_null($categories)) {
       $cats = is_array($categories) ? $categories : explode(',',$categories);
       $questions->whereIn('category_id',$cats);
     }
-    if($count > 0) {
-      $questions = $questions->limit($count);
-    }
-    $questions = $questions->get();
+    $questions = $questions->get()->makeHidden('correct_answer_id');
     $response = $response->withJson($questions);
     return $response;
   });
@@ -72,7 +73,48 @@ $app->group('/categories', function () {
     return $response;
   });
 });
+$app->group('/quiz', function () {
+  //Get questions for quiz
+  $this->get('/questions', function ($request, $response, $args) {
+    $count = $request->getParam('count') !== null &&  $request->getParam('count') > 0 ? $request->getParam('count'):5;
+    $categories = $request->getParam('categories') !== null && $request->getParam('categories') !== '' ? $request->getParam('categories'):null;
+    $questions = CyberChallenge\Question::with(['category', 'answers' => function ($q) {
+      $q->inRandomOrder();
+    }])->inRandomOrder()->limit($count);
+    if(!is_null($categories)) {
+      $cats = is_array($categories) ? $categories : explode(',',$categories);
+      $questions->whereIn('category_id',$cats);
+    }
+    $questions = $questions->get()->makeHidden('correct_answer_id');
+    $response = $response->withJson($questions);
+    return $response;
+  });
+  //Submit Answers
+  $this->post('/answers', function ($request, $response, $args) {
+    $formData = $request->getParsedBody();
+    if(!isset($formData['answers']) || !is_array($formData['answers']) || $formData['answers'] == '') {
 
+    }
+    $answersData = array(
+      'answers' => array_fill_keys(array_keys($formData['answers']), false),
+      'correct_answers' => 0,
+      'incorrect_answers' => 0,
+      'total' =>count($formData['answers'])
+    );
+    foreach($formData['answers'] as $question_id=>$answer_id) {
+      $question = CyberChallenge\Question::find($question_id);
+      if($question->correct_answer_id == $answer_id) {
+        $answersData['answers'][$question_id] = true;
+        $answersData['correct_answers']++;
+      } else {
+        $answersData['incorrect_answers']++;
+      }
+    }
+
+    $response = $response->withJson($answersData);
+    return $response;
+  });
+});
 $app->run();
 
 ?>
