@@ -15,4 +15,4 @@ test.php
 config.ini
 !secured/config.example.ini
 favicons/
-composer.lock
+# composer.lock
