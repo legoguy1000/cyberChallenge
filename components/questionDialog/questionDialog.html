@@ -1,0 +1,48 @@
+<md-dialog aria-label="New/Edit Question" style="" layout="column" flex="50" >
+	<form ng-cloak layout="column" flex layout-fill ng-submit="vm.submitForm()">
+		<md-toolbar layout="row">
+		  <div class="md-toolbar-tools">
+				<h2><span ng-show="vm.new">New</span><span ng-hide="vm.new">Edit</span> Question</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="vm.cancel()">
+				  <md-icon class=""> close </md-icon>
+				</md-button>
+	  	</div>
+		</md-toolbar>
+		<md-dialog-content layout="column" layout-margin>
+			<div layout="column">
+				<md-input-container flex>
+					<label>Category</label>
+					<md-select ng-model="vm.data.category_id" required>
+						<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container class="md-block">
+          <label>Hint 1</label>
+          <input ng-model="vm.data.hint_1" required>
+        </md-input-container>
+				<md-input-container class="md-block">
+          <label>Hint 2</label>
+          <input ng-model="vm.data.hint_2">
+        </md-input-container>
+				<md-input-container class="md-block">
+          <label>Hint 3</label>
+          <input ng-model="vm.data.hint_3">
+        </md-input-container>
+				<md-input-container class="md-block" ng-repeat="a in [0,1,2,3]">
+          <label>Answer {{a+1}} <span ng-if="$first">(Correct Answer Here)</span></label>
+          <input ng-model="vm.data.answers[a].answer" required>
+        </md-input-container>
+			</div>
+			<div layout="column" layout-gt-xs="row">
+			</div>
+			<!-- <pre>{{vm.userInfo | json}}</pre> -->
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<md-button type="submit">
+				Submit
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

@@ -50,8 +50,8 @@
 		<div ng-show="vm.questions[vm.currentQuestionIndex].hint_3 != ''">
 			{{vm.questions[vm.currentQuestionIndex].hint_3}}
 		</div>
-		<md-content flex layout="column" layout-gt-sm="row" layout-align="space-between center">
-			<md-button type="button" ng-repeat="a in vm.questions[vm.currentQuestionIndex].answers track by $index" ng-click="vm.answerQuestion(a);this.blur();" style="text-transform:inherit;" ng-disabled="vm.answersDisabled">
+		<md-content flex layout="row" layout-align="space-between center" layout-wrap style="margin-top:50px;">
+			<md-button flex="45" type="button" ng-repeat="a in vm.questions[vm.currentQuestionIndex].answers track by $index" ng-click="vm.answerQuestion(a);this.blur();" style="text-transform:inherit;" ng-disabled="vm.answersDisabled">
 				<md-tooltip md-direction="top">Answer {{vm.answerOptions[$index] | uppercase}}</md-tooltip>
 				<b>{{vm.answerOptions[$index] | uppercase}}: </b>{{a.answer}}
 			</md-button>

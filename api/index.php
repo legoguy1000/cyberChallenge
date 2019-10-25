@@ -25,43 +25,105 @@ $app->group('/questions', function () {
     $response = $response->withJson($questions);
     return $response;
   });
-  //Get questions for quiz
-  $this->get('/quiz', function ($request, $response, $args) {
-    $count = $request->getParam('count') !== null &&  $request->getParam('count') > 0 ? $request->getParam('count'):5;
-    $categories = $request->getParam('categories') !== null && $request->getParam('categories') !== '' ? $request->getParam('categories'):null;
-    $questions = CyberChallenge\Question::with(['category', 'answers' => function ($q) {
-      $q->inRandomOrder();
-    }])->inRandomOrder()->limit($count);
-    if(!is_null($categories)) {
-      $cats = is_array($categories) ? $categories : explode(',',$categories);
-      $questions->whereIn('category_id',$cats);
+  //Add question
+  $this->post('', function ($request, $response, $args) {
+    $question_id = $args['question_id'];
+    $formData = $request->getParsedBody();
+
+    if(!isset($formData['category_id']) || $formData['category_id'] == '') {
+      $responseArr = array('status'=>false, 'msg'=>'Category cannot be blank!');
+      $response = $response->withJson($responseArr);
+      return $response;
     }
-    $questions = $questions->get()->makeHidden('correct_answer_id');
-    $response = $response->withJson($questions);
+    $category = $formData['category_id'];
+    $cat = CyberChallenge\Category::find($category);
+    if(is_null($cat)) {
+      $responseArr = array('status'=>false, 'msg'=>'Invalid Category');
+      $response = $response->withJson($responseArr);
+      return $response;
+    }
+    if(!isset($formData['hint_1']) || $formData['hint_1'] == '') {
+      $responseArr = array('status'=>false, 'msg'=>'Hint 1 cannot be blank');
+      $response = $response->withJson($responseArr);
+      return $response;
+    }
+    $answers = array();
+    foreach($formData['answers'] as $i=>$answer) {
+      if(!isset($answer['answer']) || $answer['answer'] == '') {
+        $responseArr = array('status'=>false, 'msg'=>'Answer '.($i+1).' cannot be blank');
+        $response = $response->withJson($responseArr);
+        return $response;
+      }
+      $answers[] = new CyberChallenge\Answer(['answer'=>$answer['answer']]);
+    }
+    $quest = new CyberChallenge\Question([
+      'hint_1'=>$formData['hint_1'],
+      'hint_2'=>!isset($formData['hint_2']) ? '':$formData['hint_2'],
+      'hint_3'=>!isset($formData['hint_3']) ? '':$formData['hint_3'],
+    ]);
+    $cat->questions()->save($quest);
+    $quest->answers()->saveMany($answers);
+    $quest->correct_answer_id = $answers[0]->answer_id;
+    $quest->save();
+    $response = $response->withJson(array('status'=>true, 'msg'=>'Question Added'));
     return $response;
   });
-  //Submit new question
-  $this->post('', function ($request, $response, $args) {
+  //Update question
+  $this->put('/{question_id:[a-z0-9]{13}}', function ($request, $response, $args) {
+    $question_id = $args['question_id'];
     $formData = $request->getParsedBody();
+    $question = CyberChallenge\Question::find($question_id);
     if(!isset($formData['category_id']) || $formData['category_id'] == '') {
-
+      $responseArr = array('status'=>false, 'msg'=>'Category cannot be blank!');
+      $response = $response->withJson($responseArr);
+      return $response;
     }
-    $category = CyberChallenge\Category::find($formData['category_id']);
-    if(is_null($category)) {
-
+    $category = $formData['category_id'];
+    if($category != $question->category_id) {
+      $cat = CyberChallenge\Category::find($category);
+      if(is_null($cat)) {
+        $responseArr = array('status'=>false, 'msg'=>'Invalid Category');
+        $response = $response->withJson($responseArr);
+        return $response;
+      }
+      $question->category_id = $cat->category_id;
     }
-    $question = new CyberChallenge\Question([
-      'hint_1'=> $formData['hint_1'],
-      'hint_2'=> $formData['hint_2'],
-      'hint_3'=> $formData['hint_3'],
-      'answer_a'=> $formData['answer_a'],
-      'answer_b'=> $formData['answer_b'],
-      'answer_c'=> $formData['answer_c'],
-      'answer_d'=> $formData['answer_d'],
-      'correct_answer'=> $formData['correct_answer'],
-    ]);
-    $category->questions()->save($question);
-    $response = $response->withJson($questions);
+    if(!isset($formData['hint_1']) || $formData['hint_1'] == '') {
+      $responseArr = array('status'=>false, 'msg'=>'Hint 1 cannot be blank');
+      $response = $response->withJson($responseArr);
+      return $response;
+    }
+    $question->hint_1 = $formData['hint_1'];
+    $question->hint_2 = !isset($formData['hint_2']) ? '':$formData['hint_2'];
+    $question->hint_3 = !isset($formData['hint_3']) ? '':$formData['hint_3'];
+
+    $answers = array();
+    foreach($formData['answers'] as $i=>$answer) {
+      if(!isset($answer['answer']) || $answer['answer'] == '') {
+        $responseArr = array('status'=>false, 'msg'=>'Answer '.($i+1).' cannot be blank');
+        $response = $response->withJson($responseArr);
+        return $response;
+      }
+      $answers[] = new CyberChallenge\Answer(['answer'=>$answer['answer']]);
+    }
+    $question->answers()->delete();
+    $question->answers()->saveMany($answers);
+    $question->correct_answer_id = $answers[0]->answer_id;
+    $question->save();
+    $response = $response->withJson(array('status'=>true, 'msg'=>'Question Updated'));
+    return $response;
+
+  });
+  //Delete question
+  $this->delete('/{question_id:[a-z0-9]{13}}', function ($request, $response, $args) {
+    $question_id = $args['question_id'];
+    $question = CyberChallenge\Question::destroy($question_id);
+    if($question) {
+      $responseArr = array('status'=>true, 'msg'=>'Question Deleted', 'data' => $question);
+    } else {
+      $responseArr = array('status'=>false, 'msg'=>'Something went wrong', 'data' => $question);
+    }
+    $response = $response->withJson($responseArr);
     return $response;
   });
 });
