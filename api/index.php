@@ -21,15 +21,54 @@ $app = new \Slim\App(['settings' => $config]);
 $app->group('/questions', function () {
   //Get all questions
   $this->get('', function ($request, $response, $args) {
-    $count = $request->getParam('count') !== null ? $request->getParam('count'):5;
-    $categories = $request->getParam('categories') !== null ? $request->getParam('categories'):null;
-    $questions = CyberChallenge\Question::inRandomOrder()->limit(5);
+    $count = $request->getParam('count') !== null ? $request->getParam('count'):0;
+    $categories = $request->getParam('categories') !== null && $request->getParam('categories') !== '' ? $request->getParam('categories'):null;
+    $random = $request->getParam('random') !== null ? true:false;
+    $questions = CyberChallenge\Question::with('category');
+    if($random) {
+      $questions = $questions->inRandomOrder();
+    }
     if(!is_null($categories)) {
       $cats = is_array($categories) ? $categories : explode(',',$categories);
       $questions->whereIn('category_id',$cats);
     }
-    $data = $questions->inRandomOrder()->limit($count)->get();
-    $response = $response->withJson($data);
+    if($count > 0) {
+      $questions = $questions->limit($count);
+    }
+    $questions = $questions->get();
+    $response = $response->withJson($questions);
+    return $response;
+  });
+  //Submit new question
+  $this->post('', function ($request, $response, $args) {
+    $formData = $request->getParsedBody();
+    if(!isset($formData['category_id']) || $formData['category_id'] == '') {
+
+    }
+    $category = CyberChallenge\Category::find($formData['category_id']);
+    if(is_null($category)) {
+
+    }
+    $question = new CyberChallenge\Question([
+      'hint_1'=> $formData['hint_1'],
+      'hint_2'=> $formData['hint_2'],
+      'hint_3'=> $formData['hint_3'],
+      'answer_a'=> $formData['answer_a'],
+      'answer_b'=> $formData['answer_b'],
+      'answer_c'=> $formData['answer_c'],
+      'answer_d'=> $formData['answer_d'],
+      'correct_answer'=> $formData['correct_answer'],
+    ]);
+    $category->questions()->save($question);
+    $response = $response->withJson($questions);
+    return $response;
+  });
+});
+$app->group('/categories', function () {
+  //Get all questions
+  $this->get('', function ($request, $response, $args) {
+    $categories = CyberChallenge\Category::orderBy('name','ASC')->get();
+    $response = $response->withJson($categories);
     return $response;
   });
 });

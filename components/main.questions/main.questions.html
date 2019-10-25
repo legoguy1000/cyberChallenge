@@ -1,0 +1,21 @@
+<div layout="column" flex>
+	<md-content flex>
+		<h3>Question Management</h3>
+	</md-content>
+	<md-content flex>
+		<div ng-repeat="question in vm.questions" layout="row" layout-align="space-between start">
+			<div>{{question.category.name}}</div>
+			<ul>
+				<li ng-if="question.hint_1 != ''">{{question.hint_1}}</li>
+				<li ng-if="question.hint_2 != ''">{{question.hint_2}}</li>
+				<li ng-if="question.hint_3 != ''">{{question.hint_3}}</li>
+			</ul>
+			<ul>
+				<li ng-if="question.answer_a != ''">{{question.answer_a}} <span ng-if="question.correct_answer == 'a'"> (Correct)</span></li>
+				<li ng-if="question.answer_b != ''">{{question.answer_b}} <span ng-if="question.correct_answer == 'b'"> (Correct)</span></li>
+				<li ng-if="question.answer_c != ''">{{question.answer_c}} <span ng-if="question.correct_answer == 'c`'"> (Correct)</span></li>
+				<li ng-if="question.answer_d != ''">{{question.answer_d}} <span ng-if="question.correct_answer == 'd"> (Correct)</span></li>
+			</ul>
+		</div>
+	</md-content>
+</div>

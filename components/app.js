@@ -18,13 +18,19 @@ angular.module('CyberChallenge', [
 		templateUrl: 'components/main.home/main.home.html',
 		controller: 'main.homeController',
 		controllerAs: 'vm',
-	}); /*
-	  .state('main.signin', {
-		url: '/signin',
-		templateUrl: 'views/main.signin.html',
-		controller: 'main.signinController',
+	})
+  .state('main.quiz', {
+		url: '/quiz',
+		templateUrl: 'components/main.quiz/main.quiz.html',
+		controller: 'main.quizController',
 		controllerAs: 'vm',
-	  })
+	})
+  .state('main.questions', {
+		url: '/questions',
+		templateUrl: 'components/main.questions/main.questions.html',
+		controller: 'main.questionsController',
+		controllerAs: 'vm',
+	}); /*
 	  .state('main.admin', {
 		url: '/admin',
 		templateUrl: 'views/main.admin.html',

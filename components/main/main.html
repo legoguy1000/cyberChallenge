@@ -5,7 +5,7 @@
 			<img ng-src="" style="max-height: 60px;"/>
 		</md-button>
 	</md-toolbar>
-	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="">
+	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="main.quiz">
 		<!--<div class="md-tile-content">
 			<i class="material-icons md-36">test</i>
 		</div>-->
@@ -14,10 +14,10 @@
 			Quiz
 		</div>
 	</md-button>
-	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="">
+	<md-button layout="row" layout-gt-sm="column" layout-align="start center" layout-align-gt-sm="center center" flex ui-sref-active="md-accent" ui-sref="main.questions">
 		<div flex="5" hide-gt-sm></div>
 		<div class="md-tile-content">
-			Add Questions
+			Question Management
 		</div>
 	</md-button>
 </md-sidenav>
@@ -45,29 +45,3 @@
 		</div>
 	</md-toolbar>
 </div>
-
-<md-sidenav md-component-id="right" class="md-whiteframe-z2 md-sidenav-right">
-    <md-toolbar>
-        <md-toolbar class="" layout="row" layout-align="center center">
-            <img class="img-circle" ng-src="{{main.userInfo.profile_image || 'images/blank_user.png'}}">
-            <md-menu md-offset="0 20">
-                <md-button class="capitalize" ng-click="$mdMenu.open()" aria-label="Open menu">
-                    <span>{{main.userInfo.full_name}}</span>
-                    <i class="material-icons">keyboard_arrow_down</i>
-                </md-button>
-                <md-menu-content width="3">
-                    <md-menu-item><md-button ng-click="main.toggleRightSidebar()" ui-sref="main.profile">Profile</md-button></md-menu-item>
-                    <md-menu-item><md-button ng-click="main.toggleRightSidebar(); main.logout()">Log out</md-button></md-menu-item>
-                </md-menu-content>
-            </md-menu>
-        </md-toolbar>
-    </md-toolbar>
-    <section>
-        <md-toolbar  class="md-hue-1">
-            <div class="md-toolbar-tools">
-                <h3>Messages</h3>
-            </div>
-        </md-toolbar>
-        <!-- <div ng-include src="'views/partials/messages.html'"/> -->
-    </section>
-</md-sidenav>
