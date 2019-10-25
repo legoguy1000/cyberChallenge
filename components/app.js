@@ -2,6 +2,7 @@ angular.module('CyberChallenge', [
 	'ngSanitize',
 	'ui.router',
 	'ngMaterial',
+	'md.data.table',
 ]).config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider, $locationProvider) {
 
 	$locationProvider.html5Mode({ enabled: true, requireBase: true });

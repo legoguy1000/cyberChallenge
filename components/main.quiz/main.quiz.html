@@ -2,8 +2,12 @@
 	<md-content flex layout="row" layout-align="center center">
 		<h2 class="">Quiz<span ng-show="vm.quizStarted && vm.quizOver"> Over</span><span ng-show="vm.quizStarted && !vm.quizOver"> Running</span></h2>
 	</md-content>
-	<md-content flex layout="row" ng-hide="vm.quizStarted">
-		<form ng-submit="vm.startQuiz()" flex layout="row" name="vm.quizParamsForm">
+	<md-content flex layout="column" layout-align="center center" ng-show="vm.loading">
+		<md-progress-circular ng-disabled="!vm.loading" md-diameter="96"></md-progress-circular>
+		<div>{{vm.loadingMessage}}</div>
+	</md-content>
+	<md-content flex layout="row" ng-hide="vm.quizStarted || vm.loading">
+		<form ng-submit="vm.startQuiz()" flex layout="column" layout-gt-sm="row" name="vm.quizParamsForm">
 			<md-input-container flex>
 				<label>Category</label>
 				<md-select ng-model="vm.quizParams.categories" multiple>
@@ -22,13 +26,13 @@
 					<md-option ng-repeat="int in [5,10,15,20,25,30]" ng-value="int">{{int}}</md-option>
 				</md-select>
 			</md-input-container>
-			<md-button type="submit">
+			<md-button type="submit" class="md-primary md-raised">
 				<md-tooltip md-direction="top">Start Quiz</md-tooltip>
 				Start Quiz
 			</md-button>
 		</form>
 	</md-content>
-	<md-content flex layout="column" ng-show="vm.quizStarted && !vm.quizOver">
+	<md-content flex layout="column" ng-show="vm.quizStarted && !vm.quizOver && !vm.loading">
 		<md-content flex layout="row" layout-align="space-between center">
 			<div>
 				<h3 class="">Question {{vm.currentQuestionIndex + 1}} of {{vm.questions.length}} </h3>
@@ -46,26 +50,25 @@
 		<div ng-show="vm.questions[vm.currentQuestionIndex].hint_3 != ''">
 			{{vm.questions[vm.currentQuestionIndex].hint_3}}
 		</div>
-		<md-content flex layout="row" layout-align="space-between center">
-			<md-button type="button" ng-repeat="a in vm.answerOptions" ng-click="vm.answerQuestion(a)">
-				<md-tooltip md-direction="top">Answer {{a | uppercase}}</md-tooltip>
-				{{vm.questions[vm.currentQuestionIndex]['answer_'+a]}}
+		<md-content flex layout="column" layout-gt-sm="row" layout-align="space-between center">
+			<md-button type="button" ng-repeat="a in vm.questions[vm.currentQuestionIndex].answers track by $index" ng-click="vm.answerQuestion(a);this.blur();" style="text-transform:inherit;" ng-disabled="vm.answersDisabled">
+				<md-tooltip md-direction="top">Answer {{vm.answerOptions[$index] | uppercase}}</md-tooltip>
+				<b>{{vm.answerOptions[$index] | uppercase}}: </b>{{a.answer}}
 			</md-button>
 		</md-content>
 	</md-content>
-	<md-content flex layout="column" ng-show="vm.quizStarted && vm.quizOver">
+	<md-content flex layout="column" ng-show="vm.quizStarted && vm.quizOver && !vm.loading">
+		<div ng-repeat="question in vm.questions track by $index">
+			Question {{$index+1}}: <span ng-if="vm.answerResults.answers[question.question_id]">Correct</span><span ng-if="!vm.answerResults.answers[question.question_id]">Incorrect</span>
+		</div>
+		<div>
+			<b>Total: {{vm.answerResults.correct_answers}} / {{vm.answerResults.total}} ({{vm.answerResults.correct_answers/vm.answerResults.total | percentage}})</b>
+		</div>
 		<md-content flex layout="row" layout-align="space-between center">
-			<div flex></div>
-			<md-button type="button" ng-click="vm.startOver()">
+			<md-button type="button" ng-click="vm.startOver()" class="md-primary md-raised">
 				<md-tooltip md-direction="top">Reset Quiz</md-tooltip>
 				Reset
 			</md-button>
 		</md-content>
-		<div ng-repeat="question in vm.questions track by $index">
-			Question {{$index+1}}: <span ng-if="vm.answers[$index]">Correct</span><span ng-if="!vm.answers[$index]">Incorrect</span>
-		</div>
-		<div>
-			<b>Total: {{vm.answerCounts.true}} / {{vm.answers.length}} ({{vm.answerCounts.true/vm.answers.length | percentage}})</b>
-		</div>
 	</md-content>
 </div>

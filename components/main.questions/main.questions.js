@@ -7,6 +7,12 @@ function mainQUestionsController($timeout, $q, $scope, $state,$sce,categoryServi
 
 		vm.questions = [];
 		vm.categories = [];
+		vm.query = {
+	    order: 'category.name',
+	    limit: 5,
+	    page: 1,
+			filter: '',
+	  };
 
 		function getAllCategories() {
 			categoryService.getAllCategories().then(function(response) {
@@ -16,11 +22,11 @@ function mainQUestionsController($timeout, $q, $scope, $state,$sce,categoryServi
 		getAllCategories();
 
 
-		function getAllQuestions() {
-			questionService.getQuestions().then(function(response) {
+		vm.getAllQuestions = function() {
+			vm.promise = questionService.getQuestions().then(function(response) {
 				vm.questions = response;
 			});
 		}
-		getAllQuestions();
+		vm.getAllQuestions();
 
 }

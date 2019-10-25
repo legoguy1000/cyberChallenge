@@ -1,8 +1,8 @@
 angular.module('CyberChallenge')
-.controller('main.quizController', ['$timeout', '$q', '$scope', '$state', '$sce','categoryService','questionService','$interval',
+.controller('main.quizController', ['$timeout', '$q', '$scope', '$state', '$sce','categoryService','quizService','$interval',
 	mainQuizController
 ]);
-function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,questionService,$interval) {
+function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,quizService,$interval) {
 	var vm = this;
 
 	vm.categories = [];
@@ -12,9 +12,12 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.currentQuestionIndex = 0;
 	vm.timer = 0;
 	vm.interval = null;
-	vm.answers = [];
+	vm.answers = {};
 	vm.answerOptions = ['a','b','c','d'];
-	vm.answerCounts = {true: 0, false: 0};
+	vm.answerResults = {};
+	vm.loading = false;
+	vm.loadingMessage = '';
+	vm.answersDisabled = false;
 	vm.quizParams = {
 		'categories': null,
 		'count': 5,
@@ -32,13 +35,14 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		var params = {
 			'categories': vm.quizParams.categories,
 			'count': vm.quizParams.count,
-			'random':'',
 		}
-		questionService.getQuestions(params).then(function(response) {
+		quizService.getQuestions(params).then(function(response) {
 			vm.questions = response;
 		});
 	}
 	vm.startQuiz = 	function() {
+		vm.loadingMessage = 'Getting Questions';
+		vm.loading = true;
 		vm.quizOver = false;
 		vm.timer = vm.quizParams.time;
 		vm.currentQuestionIndex = 0;
@@ -46,14 +50,15 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		var params = {
 			'categories': vm.quizParams.categories,
 			'count': vm.quizParams.count,
-			'random':'',
 		}
-		questionService.getQuestions(params).then(function(response) {
+		quizService.getQuestions(params).then(function(response) {
 			vm.questions = response;
 			vm.quizStarted = true;
+			vm.loading = false;
 			for(var i=0; i<vm.questions.length; i++) {
-				vm.answers.push(false);
+				vm.answers[vm.questions[i].question_id] = null;
 			}
+			console.log(vm.answers);
 			interval();
 		});
 	}
@@ -73,21 +78,26 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		if(vm.currentQuestionIndex < (vm.questions.length - 1)) {
 			vm.currentQuestionIndex++;
 			interval();
+			vm.answersDisabled = false;
 		} else {
 			vm.quizOver = true;
-			for (var i = 0; i < vm.answers.length; i++) {
-			  var answer = vm.answers[i];
-			  vm.answerCounts[answer] = vm.answerCounts[answer] + 1;
+			vm.loadingMessage = 'Submitting Answers';
+			vm.loading = true;
+			console.log(vm.answers);
+			var answers = {
+				'answers': vm.answers,
 			}
+			quizService.submitAnswers(answers).then(function(response) {
+				vm.answerResults = response;
+				vm.loading = false;
+			});
 		}
 	}
 
 	vm.answerQuestion = function(choice) {
-		if(choice == vm.questions[vm.currentQuestionIndex].correct_answer) {
-			vm.answers[vm.currentQuestionIndex] = true;
-		} else if(vm.answerOptions.indexOf(choice) >= 0) {
-			vm.answers[vm.currentQuestionIndex] = false;
-		}
+		vm.answersDisabled = true;
+		var id = vm.questions[vm.currentQuestionIndex].question_id;
+		vm.answers[id] = choice.answer_id;
 		incrementQuestion();
 	}
 
@@ -99,8 +109,20 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		vm.currentQuestionIndex = 0;
 		vm.timer = 0;
 		vm.interval = null;
-		vm.answers = [];
-		vm.answerCounts = {true: 0, false: 0};
+		vm.answers = {};
+		vm.answerResults = {};
+		vm.answersDisabled = false;
 	}
+
+	$(document).keydown(function (e) {
+	    //console.log(e);
+			//console.log(e.originalEvent.key);
+			//vm.answerOptions[$index];
+			var index = vm.answerOptions.indexOf(e.originalEvent.key);
+			if(!vm.answersDisabled && vm.quizStarted && !vm.quizOver && !vm.loading && index >= 0) {
+				var answer = vm.questions[vm.currentQuestionIndex].answers[index];
+				vm.answerQuestion(answer);
+			}
+	});
 
 }
