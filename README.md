@@ -5,7 +5,7 @@
 * Apache Web Server
   * Mod Rewrite enabled
   * libapache2-mod-php
-* PHP 7.2 or greater
+* PHP 7.2 or greater (7.3 is currently the latest)
   * php 
   * libapache2-mod-php 
   * php-mysql
