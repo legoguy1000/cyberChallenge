@@ -29,10 +29,12 @@ Follow the instructions from [install instructions](https://getcomposer.org/down
 mv composer.phar /usr/local/bin/composer
 ```
 
-Clone Git Repo into your web dir
+Clone Git Repo into your web dir or download as tar.gz and extract
 ```
-ex. cd /var/www/html
-git clone https://github.com/legoguy1000/cyberChallenge.git .
+git clone https://github.com/legoguy1000/cyberChallenge.git /path/to/web/dir
+OR
+wget -O cyberChallenge.tar.gz https://github.com/legoguy1000/cyberChallenge/tarball/master
+tar xvzf cyberChallenge.tar.gz -C /path/to/web/dir
 ```
 
 Go into the app directory
