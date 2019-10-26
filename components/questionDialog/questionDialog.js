@@ -71,11 +71,5 @@ function questionDialogController($timeout, $q, $scope, $state,$sce,categoryServ
 	}
 	getAllCategories();
 
-	function getQuestions() {
-		vm.questions = [];
-		questionService.getQuestions().then(function(response) {
-			vm.questions = response;
-		});
-	}
 
 }

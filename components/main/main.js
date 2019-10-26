@@ -1,9 +1,9 @@
 angular.module('CyberChallenge')
 .controller('mainController', [
-	'$rootScope', '$mdSidenav', '$log', '$q', '$state', '$mdToast', '$mdDialog',
+	'$mdSidenav',
 	mainController
 ]);
-function mainController($rootScope, $mdSidenav, $log, $q, $state, $mdToast, $mdDialog) {
+function mainController($mdSidenav,) {
 	var main = this;
 	main.toggleItemsList = toggleItemsList;
 

@@ -1,10 +1,7 @@
 angular.module('CyberChallenge')
-.controller('main.homeController', ['$timeout', '$q', '$scope', '$state', '$sce',
+.controller('main.homeController', [
 	mainHomeController
 ]);
-function mainHomeController($timeout, $q, $scope, $state,$sce) {
+function mainHomeController() {
     var vm = this;
-
-
-
 }

@@ -52,7 +52,7 @@ function mainQUestionsController($timeout, $q, $scope, $state,$sce,categoryServi
 					},
 				}
 			})
-			.then(function(response) {
+			.then(function() {
 				vm.getAllQuestions();
 			}, function() { });
 		}

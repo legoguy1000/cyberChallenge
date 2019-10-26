@@ -1,7 +1,7 @@
 angular.module('CyberChallenge')
 .service('questionService', function ($http) {
 	return {
-		getQuestions: function (params) {
+		getQuestions: function () {
 			return $http.get('api/questions')
 			.then(function(response) {
 				return response.data;

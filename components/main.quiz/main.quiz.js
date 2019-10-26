@@ -30,16 +30,6 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	}
 	getAllCategories();
 
-	function getQuestions() {
-		vm.questions = [];
-		var params = {
-			'categories': vm.quizParams.categories,
-			'count': vm.quizParams.count,
-		}
-		quizService.getQuestions(params).then(function(response) {
-			vm.questions = response;
-		});
-	}
 	vm.startQuiz = 	function() {
 		vm.loadingMessage = 'Getting Questions';
 		vm.loading = true;

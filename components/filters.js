@@ -83,24 +83,17 @@ angular.module('CyberChallenge')
                 break;
         }
 
-        if(number){
-            if(number.length>3){
+        if(number) {
+            if(number.length>3) {
                 number = number.slice(0, 3) + '-' + number.slice(3,7);
             }
-            else{
-                number = number;
-            }
-            if(country)
-            {
+            if(country) {
                 return (country+" (" + city + ") " + number).trim();
-            }
-            else
-            {
+            } else {
                  return (" (" + city + ") " + number).trim();
             }
 
-        }
-        else{
+        } else {
             return "(" + city;
         }
     };
