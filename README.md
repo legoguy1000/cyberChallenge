@@ -17,30 +17,35 @@
 
 # Install
 
-1. Install PHP with required prerequisites
+Install PHP with required prerequisites
 ```
 Ubuntu: apt-get install php libapache2-mod-php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
 CentOS: yum install php libapache2-mod-php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
 ```
+
 Install Composer  
 Follow the instructions from [install instructions](https://getcomposer.org/download/).  Then move the composer.phar file from the current directory to make it globally accesible.
 ```
 mv composer.phar /usr/local/bin/composer
 ```
-2.  Clone Git Repo into your web dir
+
+Clone Git Repo into your web dir
 ```
 ex. cd /var/www/html
 git clone https://github.com/legoguy1000/cyberChallenge.git .
 ```
-3. Go into the app directory
+
+Go into the app directory
 ```
 cd api/app
 ```
-4. Make a copy of the ini file and rename to config.ini and edit the config.ini with you DB information
+
+Make a copy of the ini file and rename to config.ini and edit the config.ini with you DB information
 ```
 mv config.example.ini config.ini
 ```
-5. Run Composer to install the dependencies  
+
+Run Composer to install the dependencies  
 If you made composer global run
 ```
 composer install
@@ -52,7 +57,7 @@ Otherwise run
 /path/to/composer.phar dump-autoload
 ```
 
-6. Run the PHP files to create the DB and seed with initial questions
+Run the PHP files to create the DB and seed with initial questions
 ```
 php _CreateDatabase.php
 php _PopulateDatabase.php
