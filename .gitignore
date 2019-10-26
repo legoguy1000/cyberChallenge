@@ -10,5 +10,6 @@ vendor/
 config.ini
 test.php
 config.ini
-favicons/
+favicons/*
+!favicons/.gitkeep
 # composer.lock

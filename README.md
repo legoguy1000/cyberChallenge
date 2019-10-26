@@ -40,4 +40,4 @@ Run the PHP files to create the DB and seed with initial questions
 php _CreateDatabase.php
 php _PopulateDatabase.php
 ```
-Go to https://realfavicongenerator.net/ and generate your favicons.  place files in /favicons/.
+Go to https://realfavicongenerator.net/ and generate your favicons.  Place files in /favicons/.
