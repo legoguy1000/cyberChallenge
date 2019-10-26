@@ -22,7 +22,7 @@ Ubuntu: https://computingforgeeks.com/how-to-install-php-7-3-on-ubuntu-18-04-ubu
 apt-get install php libapache2-mod-php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
 ````
 CentOS: https://linuxize.com/post/install-php-7-on-centos-7/  
-````
+```
 yum install php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
 ```
 
