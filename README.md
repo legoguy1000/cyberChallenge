@@ -17,9 +17,10 @@
 
 # Install
 
-Clone Git Repo
+Clone Git Repo into your web dir
 ```
-git clone https://github.com/legoguy1000/cyberChallenge.git
+ex. cd /var/www/html
+git clone https://github.com/legoguy1000/cyberChallenge.git .
 ```
 
 Go into the app directory
