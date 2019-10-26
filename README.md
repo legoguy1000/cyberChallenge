@@ -64,5 +64,7 @@ Run the PHP files to create the DB and seed with initial questions
 ```
 php _CreateDatabase.php
 php _PopulateDatabase.php
+OR
+php _PopulateDatabaseFromCSV.php /path/to/csv (See exampleCSV.csv for format)
 ```
 Go to https://realfavicongenerator.net/ and generate your favicons.  Do not copy the HTML (that already exists). Place files in /favicons/.
