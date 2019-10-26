@@ -6,6 +6,7 @@
 # Prerequisites
 * Apache Web Server
   * Mod Rewrite enabled
+  * Mod Deflate (Optional)
 * PHP 7.2 or greater (7.3 is currently the latest)
   * php
   * libapache2-mod-php (Ubuntu/Debian Package)
@@ -31,6 +32,13 @@ yum install php php-mysql php-mbstring php-xml (optionally install php7.2-opcach
 **Enable Mod Rewrite**  
 Ubuntu: https://hostadvice.com/how-to/how-to-enable-apache-mod_rewrite-on-an-ubuntu-18-04-vps-or-dedicated-server/
 CentOS: https://devops.ionos.com/tutorials/install-and-configure-mod_rewrite-for-apache-on-centos-7/#enable-mod_rewrite-module
+
+**Enable Mod Deflate (Optional)**  
+Ubuntu:
+```
+sudo a2enmod deflate
+```
+CentOS: Should be installed by default (https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-mod_deflate-on-centos-7)  
 
 **Install Composer**  
 Follow the instructions from [install instructions](https://getcomposer.org/download/).  Then move the composer.phar file from the current directory to make it globally accesible.
