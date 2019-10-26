@@ -1,6 +1,8 @@
 # Cyber Challenge
 [![CodeFactor](https://www.codefactor.io/repository/github/legoguy1000/cyberchallenge/badge/master)](https://www.codefactor.io/repository/github/legoguy1000/cyberchallenge/overview/master)
-
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/legoguy1000/cyberChallenge)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/legoguy1000/cyberChallenge)
+![GitHub contributors](https://img.shields.io/github/contributors/legoguy1000/cyberChallenge)
 # Prerequisites
 * Apache Web Server
   * Mod Rewrite enabled
