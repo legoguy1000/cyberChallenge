@@ -9,7 +9,7 @@
 	<md-content flex layout="row" ng-hide="vm.quizStarted || vm.loading">
 		<form ng-submit="vm.startQuiz()" flex layout="column" layout-gt-sm="row" name="vm.quizParamsForm">
 			<md-input-container flex>
-				<label>Category</label>
+				<label>Category (Defaults to All)</label>
 				<md-select ng-model="vm.quizParams.categories" multiple>
 					<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
 				</md-select>
