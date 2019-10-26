@@ -17,7 +17,7 @@
 
 # Install
 
-Install PHP
+Install PHP with required prerequisites
 ```
 Ubuntu: apt-get install php libapache2-mod-php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
 CentOS: yum install php libapache2-mod-php php-mysql php-mbstring php-xml (optionally install php7.2-opcache/php7.3-opcache)
