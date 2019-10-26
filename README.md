@@ -31,6 +31,10 @@ yum install php php-mysql php-mbstring php-xml (optionally install php7.2-opcach
 
 **Enable Mod Rewrite**  
 Ubuntu: https://hostadvice.com/how-to/how-to-enable-apache-mod_rewrite-on-an-ubuntu-18-04-vps-or-dedicated-server/
+```
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+```
 CentOS: https://devops.ionos.com/tutorials/install-and-configure-mod_rewrite-for-apache-on-centos-7/#enable-mod_rewrite-module
 
 **Enable Mod Deflate (Optional)**  
