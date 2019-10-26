@@ -1,5 +1,5 @@
 # Cyber Challenge
-
+[![CodeFactor](https://www.codefactor.io/repository/github/legoguy1000/cyberchallenge/badge/master)](https://www.codefactor.io/repository/github/legoguy1000/cyberchallenge/overview/master)
 
 # Prerequisites
 * Apache Web Server
