@@ -12,7 +12,7 @@
   * php-mbstring
   * php-xml
 * Composer [install instructions](https://getcomposer.org/download/)
-* MySQL
+* MySQL/MariaDB
 * Git
 
 # Install
