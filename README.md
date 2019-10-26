@@ -26,7 +26,7 @@ Go into the app directory
 ```
 cd api/app
 ```
-Make a copy of the ini file and rename to config.ini
+Make a copy of the ini file and rename to config.ini  
 Edit the config.ini with you DB information
 ```
 mv config.example.ini config.ini
