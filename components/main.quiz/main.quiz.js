@@ -120,8 +120,10 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 			//vm.answerOptions[$index];
 			var index = vm.answerOptions.indexOf(e.originalEvent.key);
 			if(!vm.answersDisabled && vm.quizStarted && !vm.quizOver && !vm.loading && index >= 0) {
-				var answer = vm.questions[vm.currentQuestionIndex].answers[index];
-				vm.answerQuestion(answer);
+				$scope.$apply(function() {
+					var answer = vm.questions[vm.currentQuestionIndex].answers[index];
+					vm.answerQuestion(answer);
+				});
 			}
 	});
 
