@@ -6,3 +6,5 @@ Are You A Hacker?,Type of computer security vulnerability typically found in web
 Cyber Patriot Questions,Knowing any information information contained in an encrypted message makes cracking the cipher easier,,,TRUE,FALSE,Not Enough Information,All of the Above
 Cyber Patriot Questions,What command in Linux displays a detailed list of the current directory?,,,ls -la,ls,df,df -h
 Cyber Patriot Questions,What Linux command changes a user group to the wheel group?,,,usermod -aG wheel username,useradd username -G wheel,wheel -G username,addusr -aG username
+Name the Hack,,,,,,,,
+General Questions,,,,,,,,

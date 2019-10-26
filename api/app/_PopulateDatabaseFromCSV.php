@@ -18,21 +18,23 @@ if (($handle = fopen($file, "r")) !== FALSE) {
       $cat = new CyberChallenge\Category(['name'=>$row['category']]);
       $cat->save();
     }
-    $quest = new CyberChallenge\Question([
-      'hint_1'=>$row['hint_1'],
-      'hint_2'=>$row['hint_2'],
-      'hint_3'=>$row['hint_3'],
-    ]);
-    $cat->questions()->save($quest);
-    $answers = array(
-      new CyberChallenge\Answer(['answer'=>$row['answer_1']]), //Correct Answer
-      new CyberChallenge\Answer(['answer'=>$row['answer_2']]),
-      new CyberChallenge\Answer(['answer'=>$row['answer_3']]),
-      new CyberChallenge\Answer(['answer'=>$row['answer_4']]),
-    );
-    $quest->answers()->saveMany($answers);
-    $quest->correct_answer_id = $answers[0]->answer_id;
-    $quest->save();
+    if($row['hint_1'] != '' && $row['answer_1'] != '') {
+      $quest = new CyberChallenge\Question([
+        'hint_1'=>$row['hint_1'],
+        'hint_2'=>$row['hint_2'],
+        'hint_3'=>$row['hint_3'],
+      ]);
+      $cat->questions()->save($quest);
+      $answers = array(
+        new CyberChallenge\Answer(['answer'=>$row['answer_1']]), //Correct Answer
+        new CyberChallenge\Answer(['answer'=>$row['answer_2']]),
+        new CyberChallenge\Answer(['answer'=>$row['answer_3']]),
+        new CyberChallenge\Answer(['answer'=>$row['answer_4']]),
+      );
+      $quest->answers()->saveMany($answers);
+      $quest->correct_answer_id = $answers[0]->answer_id;
+      $quest->save();
+    }
   }
   fclose($handle);
 }
