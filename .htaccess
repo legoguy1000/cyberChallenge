@@ -13,7 +13,6 @@ RewriteRule ^ index.html [L]
 
 Options -Indexes
 ServerSignature Off
-#ServerTokens Prod
 
 <ifModule mod_headers.c>
 Header set X-Frame-Options "deny"
