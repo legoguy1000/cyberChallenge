@@ -2,7 +2,7 @@
 	<md-content flex>
 		<md-toolbar class="md-table-toolbar md-default">
 		  <div class="md-toolbar-tools">
-		    <span>Question Management</span>
+		    <span>Questions</span>
 				<div flex></div>
 				<md-button class="md-icon-button" ng-click="vm.getAllQuestions()">
 					<md-icon>refresh</md-icon>
@@ -58,6 +58,7 @@
 		<md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.questions.length}}" md-page-select></md-table-pagination>
 	</md-content>
 	<md-content flex layout="column">
+		<h3>Quiz</h3>
 		<form ng-submit="vm.submitQuiz()" flex layout="column" name="vm.quizForm">
 			<div flex layout="column" layout-gt-sm="row">
 				<md-input-container flex>
