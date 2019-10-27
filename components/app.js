@@ -26,10 +26,10 @@ angular.module('CyberChallenge', [
 		controller: 'main.quizController',
 		controllerAs: 'vm',
 	})
-  .state('main.questions', {
-		url: '/questions',
-		templateUrl: 'components/main.questions/main.questions.html',
-		controller: 'main.questionsController',
+  .state('main.admin', {
+		url: '/admin',
+		templateUrl: 'components/main.admin/main.admin.html',
+		controller: 'main.adminController',
 		controllerAs: 'vm',
 	}); /*
 	  .state('main.admin', {

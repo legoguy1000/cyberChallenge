@@ -57,4 +57,38 @@
 		</md-table-container>
 		<md-table-pagination md-limit="vm.query.limit" md-limit-options="[5, 10, 15]" md-page="vm.query.page" md-total="{{vm.questions.length}}" md-page-select></md-table-pagination>
 	</md-content>
+	<md-content flex layout="column">
+		<form ng-submit="vm.submitQuiz()" flex layout="column" name="vm.quizForm">
+			<div flex layout="column" layout-gt-sm="row">
+				<md-input-container flex>
+					<label>Category (Defaults to All)</label>
+					<md-select ng-model="vm.quizParams.categories" multiple>
+						<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Number of Questions</label>
+					<md-select ng-model="vm.quizParams.question_count" required>
+						<md-option ng-repeat="int in [1,5,10,15,20,25,30]" ng-value="int">{{int}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Time per Question</label>
+					<md-select ng-model="vm.quizParams.time" required>
+						<md-option ng-repeat="int in [5,10,15,20,25,30]" ng-value="int">{{int}}</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<div layout="row" layout-align="center center">
+				<md-button type="button" class="md-warn md-raised" ng-click="vm.deleteQuiz()">
+					<md-tooltip md-direction="top">Delete</md-tooltip>
+					Delete Quiz
+				</md-button>
+				<md-button type="submit" class="md-primary md-raised">
+					<md-tooltip md-direction="top">submit</md-tooltip>
+					Submit Quiz
+				</md-button>
+			</div>
+		</form>
+	</md-content>
 </div>

@@ -53,5 +53,23 @@ angular.module('CyberChallenge')
 				return response.data;
 			});
 		},
+		getQuiz: function () {
+			return $http.get('api/quiz')
+			.then(function(response) {
+				return response.data;
+			});
+		},
+		createQuiz: function (formData) {
+			return $http.post('api/quiz',formData)
+			.then(function(response) {
+				return response.data;
+			});
+		},
+		deleteQuiz: function () {
+			return $http.delete('api/quiz')
+			.then(function(response) {
+				return response.data;
+			});
+		},
 	};
 });

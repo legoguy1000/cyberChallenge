@@ -176,6 +176,59 @@ $app->group('/quiz', function () {
     $response = $response->withJson($answersData);
     return $response;
   });
+  //Get Quiz
+  $this->get('', function ($request, $response, $args) {
+    $quiz = CyberChallenge\Quiz::first();
+    /* if(!is_null($quiz)) {
+      $quiz->getQuestions();
+    } */
+    $response = $response->withJson($quiz);
+    return $response;
+  });
+  //Create Quiz
+  $this->post('', function ($request, $response, $args) {
+    $formData = $request->getParsedBody();
+    $categories = null;
+    $count = 5;
+    $time = 15;
+    if(isset($formData['categories']) && is_array($formData['categories']) && $formData['categories'] != '') {
+      $categories = $formData['categories'];
+    }
+    if(isset($formData['question_count']) && $formData['question_count'] != '' && $formData['question_count'] != null) {
+      $count = $formData['question_count'];
+    } else {
+      $responseArr = array('status'=>false, 'msg'=>'Question count cannot be blank');
+      $response = $response->withJson($responseArr);
+    }
+    if(isset($formData['time']) && $formData['time'] != '' && $formData['time'] != null) {
+      $time = $formData['time'];
+    } else {
+      $responseArr = array('status'=>false, 'msg'=>'Time cannot be blank');
+      $response = $response->withJson($responseArr);
+    }
+    $quiz = CyberChallenge\Quiz::firstOrNew([['quiz_id','!=','']]);
+    $quiz->categories = !is_null($categories) ? $categories : array();
+    $quiz->question_count = $count;
+    $quiz->time = $time;
+    if($quiz->save()) {
+      $responseArr = array('status'=>true, 'msg'=>'Quiz Updated');
+    } else {
+      $responseArr = array('status'=>false, 'msg'=>'Something went wrong');
+    }
+    $response = $response->withJson($responseArr);
+    return $response;
+  });
+  //Delete Quiz
+  $this->delete('', function ($request, $response, $args) {
+    $quiz = CyberChallenge\Quiz::first()->delete();
+    if($quiz) {
+      $responseArr = array('status'=>true, 'msg'=>'Quiz Deleted');
+    } else {
+      $responseArr = array('status'=>false, 'msg'=>'Something went wrong');
+    }
+    $response = $response->withJson($responseArr);
+    return $response;
+  });
 });
 $app->run();
 

@@ -9,6 +9,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.questions = [];
 	vm.quizStarted = false;
 	vm.quizOver = false;
+	vm.quizSet = false;
 	vm.currentQuestionIndex = 0;
 	vm.timer = 0;
 	vm.interval = null;
@@ -23,6 +24,21 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		'count': 5,
 		'time': 15,
 	};
+
+	vm.getQuiz = function() {
+		quizService.getQuiz().then(function(response) {
+			if(response != null && response != undefined) {
+				vm.quizSet = true;
+				vm.quizParams = {
+					'categories': response.categories,
+					'count': response.question_count,
+					'time': response.time,
+				};
+			}
+		});
+	}
+	vm.getQuiz();
+
 	function getAllCategories() {
 		categoryService.getAllCategories().then(function(response) {
 			vm.categories = response;
@@ -30,10 +46,12 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	}
 	getAllCategories();
 
+
 	vm.startQuiz = 	function() {
 		vm.loadingMessage = 'Getting Questions';
 		vm.loading = true;
 		vm.quizOver = false;
+		vm.answersDisabled = false;
 		vm.timer = vm.quizParams.time;
 		vm.currentQuestionIndex = 0;
 		vm.questions = [];
@@ -113,6 +131,15 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 				$scope.$apply(function() {
 					var answer = vm.questions[vm.currentQuestionIndex].answers[index];
 					vm.answerQuestion(answer);
+				});
+			}
+			if(!vm.loading && e.originalEvent.key=='a') {
+				$scope.$apply(function() {
+					if(!vm.quizStarted || (vm.quizStarted && vm.quizOver && vm.quizSet)) {
+						vm.startQuiz();
+					} else if (vm.quizStarted && vm.quizOver) {
+						vm.startOver();
+					}
 				});
 			}
 	});

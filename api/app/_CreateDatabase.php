@@ -25,4 +25,12 @@ Capsule::schema()->create('categories', function ($table) {
   $table->timestamps();
 });
 
+Capsule::schema()->create('quiz', function ($table) {
+  $table->char('quiz_id',13)->primary();
+  $table->string('name')->default('');
+  $table->text('categories');
+  $table->integer('question_count')->default(0);
+  $table->integer('time')->default(0);
+  $table->timestamps();
+});
 ?>
