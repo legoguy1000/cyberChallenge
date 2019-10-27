@@ -11,5 +11,6 @@ RewriteRule ^ index.html [L]
 </ifmodule>
 #End Gzip
 
+Options -Indexes
 ServerSignature Off
 #ServerTokens Prod
