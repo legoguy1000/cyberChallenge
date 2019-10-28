@@ -52,6 +52,8 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		vm.loading = true;
 		vm.quizOver = false;
 		vm.answersDisabled = false;
+		vm.answerResults = {};
+		vm.answers = {};
 		vm.timer = vm.quizParams.time;
 		vm.currentQuestionIndex = 0;
 		vm.questions = [];
