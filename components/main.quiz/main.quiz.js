@@ -50,13 +50,14 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.startQuiz = 	function() {
 		vm.loadingMessage = 'Getting Questions';
 		vm.loading = true;
-		vm.quizOver = false;
-		vm.answersDisabled = false;
-		vm.answerResults = {};
-		vm.answers = {};
+		vm.startOver();
 		vm.timer = vm.quizParams.time;
-		vm.currentQuestionIndex = 0;
-		vm.questions = [];
+		//vm.quizOver = false;
+		//vm.answersDisabled = false;
+		//vm.answerResults = {};
+		//vm.answers = {};
+		//vm.currentQuestionIndex = 0;
+		//vm.questions = [];
 		var params = {
 			'categories': vm.quizParams.categories,
 			'count': vm.quizParams.count,
