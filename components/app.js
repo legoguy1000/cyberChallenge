@@ -56,4 +56,10 @@ angular.module('CyberChallenge', [
 .config( ['$compileProvider', function( $compileProvider ) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|slack):/);
         // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
-}]);
+}])
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .primaryPalette('red')
+    .accentPalette('grey')
+		.backgroundPalette('grey');
+});
