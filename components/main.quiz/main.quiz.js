@@ -42,9 +42,9 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	function getAllCategories() {
 		categoryService.getAllCategories().then(function(response) {
 			vm.categories = response;
-			angular.forEach(vm.categories, function(value, key) {
+			/* angular.forEach(vm.categories, function(value, key) {
 				vm.quizParams.categories.push(value.category_id);
-			});
+			}); */
 		});
 	}
 	getAllCategories();
