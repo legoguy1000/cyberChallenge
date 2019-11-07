@@ -176,17 +176,12 @@ $app->group('/quiz', function () {
     $image_dir = __DIR__ . '/../images';
     if($score > .66) {
       $sub_dir = '/top';
-      $image_dir = $image_dir.$sub_dir;
-      $images = array_diff(scandir($image_dir), array('.', '..'));
     } elseif ($score > .33) {
       $sub_dir = '/middle';
-      $image_dir = $image_dir.$sub_dir;
-      $images = array_diff(scandir($image_dir), array('.', '..'));
     } else {
       $sub_dir = '/bottom';
-      $image_dir = $image_dir.$sub_dir;
-      $images = array_diff(scandir($image_dir), array('.', '..'));
     }
+    $images = array_diff(scandir($image_dir.$sub_dir), array('.', '..'));
     $answersData['image'] = './images'.$sub_dir.'/'.$images[array_rand($images, 1)];
     $answersData['score'] = $score;
     $response = $response->withJson($answersData);
