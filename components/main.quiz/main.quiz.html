@@ -1,6 +1,9 @@
 <div layout="column" flex>
 	<md-content flex layout="row" layout-align="center center">
-		<h2 class="">Quiz<span ng-show="vm.quizStarted && vm.quizOver"> Over</span><span ng-show="vm.quizStarted && !vm.quizOver"> Running</span></h2>
+		<h1 class="">Quiz<span ng-show="vm.quizStarted && vm.quizOver"> Over</span><span ng-show="vm.quizStarted && !vm.quizOver"> Running</span></h1>
+	</md-content>
+	<md-content flex layout="row" layout-align="center center" ng-show="vm.quizStarted && !vm.quizOver && !vm.loading">
+		<h2 class="">Category: {{vm.questions[vm.currentQuestionIndex].category.name}}</h2>
 	</md-content>
 	<md-content flex layout="column" layout-align="center center" ng-show="vm.loading">
 		<md-progress-circular ng-disabled="!vm.loading" md-diameter="96"></md-progress-circular>
@@ -11,7 +14,7 @@
 			<div flex layout="column" layout-gt-sm="row">
 				<md-input-container flex>
 					<label>Category (Defaults to All)</label>
-					<md-select ng-model="vm.quizParams.categories" multiple ng-disabled="vm.quizSet">
+					<md-select ng-model="vm.quizParams.categories" multiple ng-disabled="vm.quizSet" placeholder="All Categories">
 						<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
 					</md-select>
 				</md-input-container>
@@ -61,12 +64,11 @@
 			</md-button>
 		</md-content>
 	</md-content>
-	<md-content flex layout="column" ng-show="vm.quizStarted && vm.quizOver && !vm.loading">
-		<div ng-repeat="question in vm.questions track by $index">
-			Question {{$index+1}}: <span ng-if="vm.answerResults.answers[question.question_id]">Correct</span><span ng-if="!vm.answerResults.answers[question.question_id]">Incorrect</span>
-		</div>
+	<md-content flex layout="column" ng-show="vm.quizStarted && vm.quizOver && !vm.loading" style="font-size:20px;">
+		<div>Correct: {{vm.answerResults.correct_answers}}</div>
+		<div>Inccorect: {{vm.answerResults.incorrect_answers}}</div>
 		<div>
-			<b>Total: {{vm.answerResults.correct_answers}} / {{vm.answerResults.total}} ({{vm.answerResults.correct_answers/vm.answerResults.total | percentage}})</b>
+			<b>Score: {{vm.answerResults.correct_answers/vm.answerResults.total | percentage}}</b>
 		</div>
 		<md-content flex layout="row" layout-align="center center">
 			<md-button type="button" ng-click="vm.startOver()" class="md-primary md-raised" ng-hide="vm.quizSet">
@@ -77,6 +79,9 @@
 				<md-tooltip md-direction="top">Start Quiz</md-tooltip>
 				Start Quiz <br/> Press A
 			</md-button>
+		</md-content>
+		<md-content flex layout="row" layout-align="center center">
+			<img ng-src="{{vm.answerResults.image}}"/>
 		</md-content>
 	</md-content>
 </div>

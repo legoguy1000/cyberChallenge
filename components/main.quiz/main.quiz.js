@@ -20,7 +20,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.loadingMessage = '';
 	vm.answersDisabled = false;
 	vm.quizParams = {
-		'categories': null,
+		'categories': [],
 		'count': 5,
 		'time': 15,
 	};
@@ -42,6 +42,9 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	function getAllCategories() {
 		categoryService.getAllCategories().then(function(response) {
 			vm.categories = response;
+			angular.forEach(vm.categories, function(value, key) {
+				vm.quizParams.categories.push(value.category_id);
+			});
 		});
 	}
 	getAllCategories();
