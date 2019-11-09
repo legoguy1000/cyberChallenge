@@ -23,6 +23,7 @@ if (($handle = fopen($file, "r")) !== FALSE) {
         'hint_1'=>$row['hint_1'],
         'hint_2'=>$row['hint_2'],
         'hint_3'=>$row['hint_3'],
+        'difficulty'=>$row['difficulty'],
       ]);
       $cat->questions()->save($quest);
       $answers = array(

@@ -19,6 +19,14 @@
 					</md-select>
 				</md-input-container>
 				<md-input-container flex>
+					<label>Question Difficulty (Defaults to All)</label>
+					<md-select ng-model="vm.quizParams.difficulty" multiple ng-disabled="vm.quizSet">
+						<md-option value="1">Easy</md-option>
+						<md-option value="2">Medium</md-option>
+						<md-option value="3">Hard</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex>
 					<label>Number of Questions</label>
 					<md-select ng-model="vm.quizParams.count" required ng-disabled="vm.quizSet">
 						<md-option ng-repeat="int in [1,5,10,15,20,25,30]" ng-value="int">{{int}}</md-option>

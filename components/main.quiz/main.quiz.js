@@ -21,6 +21,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 	vm.answersDisabled = false;
 	vm.quizParams = {
 		'categories': [],
+		'difficulty': [],
 		'count': 5,
 		'time': 15,
 	};
@@ -31,6 +32,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 				vm.quizSet = true;
 				vm.quizParams = {
 					'categories': response.categories,
+					'difficulty': response.difficulty,
 					'count': response.question_count,
 					'time': response.time,
 				};
@@ -64,6 +66,7 @@ function mainQuizController($timeout, $q, $scope, $state,$sce,categoryService,qu
 		var params = {
 			'categories': vm.quizParams.categories,
 			'count': vm.quizParams.count,
+			'difficulty': vm.quizParams.difficulty,
 		}
 		quizService.getQuestions(params).then(function(response) {
 			vm.questions = response;

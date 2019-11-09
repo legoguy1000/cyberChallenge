@@ -10,6 +10,7 @@ if(!Capsule::schema()->hasTable('questions')) {
     $table->text('hint_2');
     $table->text('hint_3');
     $table->char('correct_answer_id',13)->default(null)->nullable();
+    $table->integer('difficulty')->default(1);
     $table->timestamps();
   });
 }
@@ -33,6 +34,7 @@ if(!Capsule::schema()->hasTable('quiz')) {
     $table->char('quiz_id',13)->primary();
     $table->string('name')->default('');
     $table->text('categories');
+    $table->text('difficulty');
     $table->integer('question_count')->default(0);
     $table->integer('time')->default(0);
     $table->timestamps();

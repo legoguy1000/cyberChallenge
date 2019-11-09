@@ -14,7 +14,8 @@ function mainAdminController($timeout, $q, $scope, $state,$sce,categoryService,q
 			filter: '',
 	  };
 		vm.quizParams = {
-			'categories': null,
+			'categories': [],
+			'difficulty': [],
 			'question_count': null,
 			'time': null,
 		};
@@ -97,6 +98,7 @@ function mainAdminController($timeout, $q, $scope, $state,$sce,categoryService,q
 				if(response.status) {
 					vm.quizParams = {
 						'categories': null,
+						'difficulty': null,
 						'question_count': null,
 						'time': null,
 					};

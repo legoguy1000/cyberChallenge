@@ -21,7 +21,7 @@ class Question extends Eloquent {
   * @var array
   */
   protected $fillable = [
-    'question_id', 'category_id', 'hint_1', 'hint_2', 'hint_3', 'answer_a', 'answer_b', 'answer_c', 'answer_d', 'correct_answer', 'correct_answer_id'
+    'question_id', 'category_id', 'hint_1', 'hint_2', 'hint_3', 'answer_a', 'answer_b', 'answer_c', 'answer_d', 'correct_answer', 'correct_answer_id', 'difficulty'
   ];
 
   protected $appends = [];

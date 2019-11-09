@@ -11,12 +11,22 @@
 		</md-toolbar>
 		<md-dialog-content layout="column" layout-margin>
 			<div layout="column">
-				<md-input-container flex>
-					<label>Category</label>
-					<md-select ng-model="vm.data.category_id" required>
-						<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
-					</md-select>
-				</md-input-container>
+				<div layout="row">
+					<md-input-container flex>
+						<label>Category</label>
+						<md-select ng-model="vm.data.category_id" required>
+							<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
+						</md-select>
+					</md-input-container>
+					<md-input-container flex>
+						<label>Question Difficulty</label>
+						<md-select ng-model="vm.data.difficulty">
+							<md-option value="1">Easy</md-option>
+							<md-option value="2">Medium</md-option>
+							<md-option value="3">Hard</md-option>
+						</md-select>
+					</md-input-container>
+				</div>
 				<md-input-container class="md-block">
           <label>Hint 1</label>
           <input ng-model="vm.data.hint_1" required>

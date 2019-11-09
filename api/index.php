@@ -47,6 +47,11 @@ $app->group('/questions', function () {
       $response = $response->withJson($responseArr);
       return $response;
     }
+    if(!isset($formData['difficulty']) || $formData['difficulty'] == '') {
+      $responseArr = array('status'=>false, 'msg'=>'Difficulty cannot be blank');
+      $response = $response->withJson($responseArr);
+      return $response;
+    }
     $answers = array();
     foreach($formData['answers'] as $i=>$answer) {
       if(!isset($answer['answer']) || $answer['answer'] == '') {
@@ -60,6 +65,7 @@ $app->group('/questions', function () {
       'hint_1'=>$formData['hint_1'],
       'hint_2'=>!isset($formData['hint_2']) ? '':$formData['hint_2'],
       'hint_3'=>!isset($formData['hint_3']) ? '':$formData['hint_3'],
+      'difficulty'=>$formData['difficulty'],
     ]);
     $cat->questions()->save($quest);
     $quest->answers()->saveMany($answers);
@@ -140,12 +146,17 @@ $app->group('/quiz', function () {
   $this->get('/questions', function ($request, $response, $args) {
     $count = $request->getParam('count') !== null &&  $request->getParam('count') > 0 ? $request->getParam('count'):5;
     $categories = $request->getParam('categories') !== null && $request->getParam('categories') !== '' ? $request->getParam('categories'):null;
+    $difficulty = $request->getParam('difficulty') !== null && $request->getParam('difficulty') !== '' ? $request->getParam('difficulty'):null;
     $questions = CyberChallenge\Question::with(['category', 'answers' => function ($q) {
       $q->inRandomOrder();
     }])->inRandomOrder()->limit($count);
     if(!is_null($categories)) {
       $cats = is_array($categories) ? $categories : explode(',',$categories);
       $questions->whereIn('category_id',$cats);
+    }
+    if(!is_null($difficulty)) {
+      $diff = is_array($difficulty) ? $difficulty : explode(',',$difficulty);
+      $questions->whereIn('difficulty',$diff);
     }
     $questions = $questions->get()->makeHidden('correct_answer_id');
     $response = $response->withJson($questions);
@@ -200,10 +211,14 @@ $app->group('/quiz', function () {
   $this->post('', function ($request, $response, $args) {
     $formData = $request->getParsedBody();
     $categories = null;
+    $difficulty = null;
     $count = 5;
     $time = 15;
     if(isset($formData['categories']) && is_array($formData['categories']) && $formData['categories'] != '') {
       $categories = $formData['categories'];
+    }
+    if(isset($formData['difficulty']) && is_array($formData['difficulty']) && $formData['difficulty'] != '') {
+      $difficulty = $formData['difficulty'];
     }
     if(isset($formData['question_count']) && $formData['question_count'] != '' && $formData['question_count'] != null) {
       $count = $formData['question_count'];
@@ -219,6 +234,7 @@ $app->group('/quiz', function () {
     }
     $quiz = CyberChallenge\Quiz::firstOrNew([['quiz_id','!=','']]);
     $quiz->categories = !is_null($categories) ? $categories : array();
+    $quiz->difficulty = !is_null($difficulty) ? $difficulty : array();
     $quiz->question_count = $count;
     $quiz->time = $time;
     if($quiz->save()) {

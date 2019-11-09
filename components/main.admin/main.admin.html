@@ -19,6 +19,7 @@
 		    <thead md-head md-order="vm.query.order">
 		      <tr md-row>
 						<th md-column md-order-by="category.name"><span>Category</span></th>
+						<th md-column md-order-by="difficulty"><span>Difficulty</span></th>
 						<th md-column><span>Hints</span></th>
 						<th md-column><span>Answers</span></th>
 						<th md-column md-order-by="updated_at" hide-xs><span>Last Updated</span></th>
@@ -28,6 +29,11 @@
 		    <tbody md-body>
 		      <tr md-row ng-repeat="question in vm.questions | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
 						<td md-cell>{{question.category.name}}</td>
+						<td md-cell ng-switch="question.difficulty">
+							<span ng-switch-when="1">Easy</span>
+							<span ng-switch-when="2">Medium</span>
+							<span ng-switch-when="3">Hard</span>
+						</td>
 		        <td md-cell>
 							<ul style="padding-inline-start: 10px;">
 								<li ng-if="question.hint_1 != ''">{{question.hint_1}}</li>
@@ -65,6 +71,14 @@
 					<label>Category (Defaults to All)</label>
 					<md-select ng-model="vm.quizParams.categories" multiple>
 						<md-option ng-repeat="cat in vm.categories" ng-value="cat.category_id">{{cat.name}}</md-option>
+					</md-select>
+				</md-input-container>
+				<md-input-container flex>
+					<label>Question Difficulty (Defaults to All)</label>
+					<md-select ng-model="vm.quizParams.difficulty" multiple ng-disabled="vm.quizSet">
+						<md-option value="1">Easy</md-option>
+						<md-option value="2">Medium</md-option>
+						<md-option value="3">Hard</md-option>
 					</md-select>
 				</md-input-container>
 				<md-input-container flex>

@@ -21,7 +21,7 @@ class Quiz extends Eloquent {
   * @var array
   */
   protected $fillable = [
-    'quiz_id', 'name', 'categories', 'question_count', 'time'
+    'quiz_id', 'name', 'categories', 'question_count', 'time', 'difficulty'
   ];
 
   protected $appends = [];
@@ -38,7 +38,8 @@ class Quiz extends Eloquent {
    * @var array
    */
   protected $casts = [
-    'categories' => 'array'
+    'categories' => 'array',
+    'difficulty' => 'array'
   ];
 
   public function save($options = array()) {
@@ -54,6 +55,9 @@ class Quiz extends Eloquent {
     }])->inRandomOrder()->limit($this->question_count);
     if(!empty($this->categories)) {
       $questions->whereIn('category_id',$this->categories);
+    }
+    if(!empty($this->difficulty)) {
+      $questions->whereIn('category_id',$this->difficulty);
     }
     $questions = $questions->get()->makeHidden('correct_answer_id');
     $this->questions = $questions;

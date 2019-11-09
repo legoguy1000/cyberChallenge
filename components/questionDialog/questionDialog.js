@@ -17,6 +17,7 @@ function questionDialogController($timeout, $q, $scope, $state,$sce,categoryServ
 			'hint_1': vm.data.hint_1,
 			'hint_2': vm.data.hint_2,
 			'hint_3': vm.data.hint_3,
+			'difficulty': vm.data.difficulty,
 			'answers': vm.data.answers,
 		}
 		questionService.addQuestion(data).then(function(response) {
@@ -31,6 +32,7 @@ function questionDialogController($timeout, $q, $scope, $state,$sce,categoryServ
 			'hint_1': vm.data.hint_1,
 			'hint_2': vm.data.hint_2,
 			'hint_3': vm.data.hint_3,
+			'difficulty': vm.data.difficulty,
 			'answers': vm.data.answers,
 		}
 		questionService.updateQuestion(data).then(function(response) {
