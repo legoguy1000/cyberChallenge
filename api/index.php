@@ -99,9 +99,15 @@ $app->group('/questions', function () {
       $response = $response->withJson($responseArr);
       return $response;
     }
+    if(!isset($formData['difficulty']) || $formData['difficulty'] == '') {
+      $responseArr = array('status'=>false, 'msg'=>'Difficulty cannot be blank');
+      $response = $response->withJson($responseArr);
+      return $response;
+    }
     $question->hint_1 = $formData['hint_1'];
     $question->hint_2 = !isset($formData['hint_2']) ? '':$formData['hint_2'];
     $question->hint_3 = !isset($formData['hint_3']) ? '':$formData['hint_3'];
+    $question->difficulty = !isset($formData['difficulty']) ? '':$formData['difficulty'];
 
     $answers = array();
     foreach($formData['answers'] as $i=>$answer) {
